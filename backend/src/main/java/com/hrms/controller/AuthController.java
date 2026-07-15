@@ -39,17 +39,33 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public org.springframework.http.ResponseEntity<?> login(@RequestBody HrLoginRequest req) {
-        String email = req.getEmail();
-        String password = req.getPassword();
+    public org.springframework.http.ResponseEntity<?> login(
+            @RequestBody(required = false) HrLoginRequest req,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String password) {
+        
+        String finalEmail = null;
+        String finalPassword = null;
+
+        if (req != null) {
+            finalEmail = req.getEmail();
+            finalPassword = req.getPassword();
+        }
+
+        if (finalEmail == null || finalEmail.isEmpty()) {
+            finalEmail = email;
+        }
+        if (finalPassword == null || finalPassword.isEmpty()) {
+            finalPassword = password;
+        }
 
         System.out.println("Login Attempt");
-        System.out.println("Email: " + email);
-        System.out.println("Password: " + password);
+        System.out.println("Email: " + finalEmail);
+        System.out.println("Password: " + finalPassword);
 
-        Optional<HrUser> hrOpt = hrUserRepository.findByEmail(email);
+        Optional<HrUser> hrOpt = hrUserRepository.findByEmail(finalEmail);
         if (hrOpt.isEmpty()) {
-            System.out.println("User not found: " + email);
+            System.out.println("User not found: " + finalEmail);
             java.util.Map<String, Object> error = new java.util.HashMap<>();
             error.put("success", false);
             error.put("message", "Invalid Email or Password");
@@ -59,9 +75,9 @@ public class AuthController {
         HrUser hr = hrOpt.get();
         System.out.println("Database email: " + hr.getEmail());
         System.out.println("Database password: " + hr.getPassword());
-        System.out.println("Incoming password: " + password);
+        System.out.println("Incoming password: " + finalPassword);
 
-        boolean match = com.hrms.util.SecurityHelper.matches(password, hr.getPassword());
+        boolean match = com.hrms.util.SecurityHelper.matches(finalPassword, hr.getPassword());
         System.out.println("Password match result: " + match);
 
         if (!match) {
