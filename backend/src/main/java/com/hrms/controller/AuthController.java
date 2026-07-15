@@ -59,31 +59,29 @@ public class AuthController {
             finalPassword = password;
         }
 
-        System.out.println("Login Attempt");
-        System.out.println("Email: " + finalEmail);
-        System.out.println("Password: " + finalPassword);
+        System.out.println("Received Email: " + finalEmail);
 
         Optional<HrUser> hrOpt = hrUserRepository.findByEmail(finalEmail);
         if (hrOpt.isEmpty()) {
-            System.out.println("User not found: " + finalEmail);
+            System.out.println("User Found or Not: Not Found");
             java.util.Map<String, Object> error = new java.util.HashMap<>();
             error.put("success", false);
-            error.put("message", "Invalid Email or Password");
+            error.put("message", "HR account not found");
+            System.out.println("Response Returned: HR account not found");
             return org.springframework.http.ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
         }
 
+        System.out.println("User Found or Not: Found");
         HrUser hr = hrOpt.get();
-        System.out.println("Database email: " + hr.getEmail());
-        System.out.println("Database password: " + hr.getPassword());
-        System.out.println("Incoming password: " + finalPassword);
 
         boolean match = com.hrms.util.SecurityHelper.matches(finalPassword, hr.getPassword());
-        System.out.println("Password match result: " + match);
+        System.out.println("Password Match Status: " + match);
 
         if (!match) {
             java.util.Map<String, Object> error = new java.util.HashMap<>();
             error.put("success", false);
-            error.put("message", "Invalid Email or Password");
+            error.put("message", "Invalid password");
+            System.out.println("Response Returned: Invalid password");
             return org.springframework.http.ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
         }
 
@@ -91,11 +89,10 @@ public class AuthController {
 
         java.util.Map<String, Object> success = new java.util.HashMap<>();
         success.put("success", true);
-        success.put("id", hr.getId());
-        success.put("name", hr.getName());
-        success.put("email", hr.getEmail());
-        success.put("token", hr.getToken());
+        success.put("message", "Login successful");
+        success.put("user", hr);
 
+        System.out.println("Response Returned: Login successful");
         return org.springframework.http.ResponseEntity.ok(success);
     }
 

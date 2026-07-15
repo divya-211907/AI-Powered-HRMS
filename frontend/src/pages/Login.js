@@ -86,9 +86,15 @@ function Login() {
     setLoading(true);
     setError("");
     try {
-      const res = await loginHr(hrEmail.trim(), hrPassword);
+      const payload = {};
+      if (hrEmail) payload.email = hrEmail.trim();
+      if (hrPassword) payload.password = hrPassword;
+      console.log("HR Login Payload:", payload);
+
+      const res = await loginHr(payload.email, payload.password);
       if (res.data) {
-        login(res.data, "HR");
+        const userData = res.data.user || res.data;
+        login(userData, "HR");
         alert("HR Login Successful!");
         navigate("/dashboard");
       }
