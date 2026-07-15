@@ -37,6 +37,7 @@ function Department() {
   useEffect(() => {
     loadDepartments();
     loadHealthScores();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadHealthScores = async () => {

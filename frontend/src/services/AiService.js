@@ -328,3 +328,14 @@ export const askAiAssistant = async (query, contextData, currentUser) => {
     return "I encountered an error communicating with the AI backend. Please verify that the backend application is running.";
   }
 };
+
+if (typeof window !== "undefined") {
+  window._aiHelpers = {
+    compileContext,
+    compileEmployeeContext,
+    compileCandidateContext,
+    runLocalDemoMode,
+    runLocalEmployeeDemo,
+    runLocalCandidateDemo
+  };
+}

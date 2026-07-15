@@ -50,6 +50,7 @@ function Payroll() {
   useEffect(() => {
     loadPayroll();
     loadRecommendations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadRecommendations = async () => {

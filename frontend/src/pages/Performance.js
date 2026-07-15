@@ -30,6 +30,7 @@ function Performance() {
 
   useEffect(() => {
     loadPerformances();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadPerformances = async () => {

@@ -55,6 +55,7 @@ function Recruitment() {
         setSlotSkipCount(0);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newStatus, showModal, selectedCandidate]);
 
   const fetchAiSlot = async (candidateId, skip) => {

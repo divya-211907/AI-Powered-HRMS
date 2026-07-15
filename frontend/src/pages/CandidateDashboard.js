@@ -336,6 +336,7 @@ function CandidateDashboard() {
       loadJobs();
     }, 10000);
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
   useEffect(() => {
@@ -438,6 +439,7 @@ function CandidateDashboard() {
     }
     setAppFeedback(feedbacks);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.skills, form.position, form.candidateName, form.mobile, form.portfolioLinks, form.experience, form.certifications, form.qualification]);
 
   const handleChange = (e) => {
