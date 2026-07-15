@@ -112,14 +112,6 @@ function Payroll() {
     }
   };
 
-  const generatePayrollId = () => {
-    if (safePayroll.length === 0) return 1;
-    const maxId = Math.max(
-      ...safePayroll.map((p) => Number(p.id || 0))
-    );
-    return maxId + 1;
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     let updatedForm = {

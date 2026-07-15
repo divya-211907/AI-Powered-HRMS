@@ -4,7 +4,7 @@ import { BASE_URL } from "./ApiService";
 /**
  * Builds the comprehensive text context of the organization for the Gemini prompt (Admin/HR fallback)
  */
-const compileContext = (contextData, currentUser) => {
+export const compileContext = (contextData, currentUser) => {
   const {
     employees = [],
     leaves = [],
@@ -42,7 +42,7 @@ INSTRUCTIONS:
 /**
  * Builds isolated Employee context for Gemini prompt
  */
-const compileEmployeeContext = (contextData, currentUser) => {
+export const compileEmployeeContext = (contextData, currentUser) => {
   const {
     employees = [],
     leaves = [],
@@ -94,7 +94,7 @@ INSTRUCTIONS:
 /**
  * Builds isolated Candidate context for Gemini prompt
  */
-const compileCandidateContext = (contextData, currentUser) => {
+export const compileCandidateContext = (contextData, currentUser) => {
   const { recruitments = [] } = contextData;
   const myRecRecord = recruitments.find(r => r.email?.toLowerCase() === currentUser?.email?.toLowerCase());
 
@@ -138,7 +138,7 @@ INSTRUCTIONS:
 /**
  * Rules-based Local Summarizer for Demo Mode (Offline / No API Key)
  */
-const runLocalDemoMode = (query, contextData) => {
+export const runLocalDemoMode = (query, contextData) => {
   const q = query.toLowerCase();
   const {
     employees = [],
@@ -187,7 +187,7 @@ ${stars || "*No performance reviews have been registered yet.*"}`;
 /**
  * Rules-based Local Summarizer for Employee Portal
  */
-const runLocalEmployeeDemo = (query, contextData, currentUser) => {
+export const runLocalEmployeeDemo = (query, contextData, currentUser) => {
   const q = query.toLowerCase();
   const { employees = [], attendance = [], leaves = [], payrolls = [] } = contextData;
   const currentEmp = employees.find(e => e.email?.toLowerCase() === currentUser?.email?.toLowerCase() || e.username?.toLowerCase() === currentUser?.username?.toLowerCase());
@@ -249,7 +249,7 @@ Try asking:
 /**
  * Rules-based Local Summarizer for Candidate Portal
  */
-const runLocalCandidateDemo = (query, contextData, currentUser) => {
+export const runLocalCandidateDemo = (query, contextData, currentUser) => {
   const q = query.toLowerCase();
   const { recruitments = [] } = contextData;
   const myRec = recruitments.find(r => r.email?.toLowerCase() === currentUser?.email?.toLowerCase());

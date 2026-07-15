@@ -21,7 +21,6 @@ function Login() {
   // HR Password Login States
   const [hrEmail, setHrEmail] = useState("");
   const [hrPassword, setHrPassword] = useState("");
-  const [hrLoginMethod, setHrLoginMethod] = useState("password"); // "password" | "otp"
   const [showHrPassword, setShowHrPassword] = useState(false);
   
   // Employee Login States

@@ -10,7 +10,7 @@ import {
 } from "../services/ApiService";
 
 function Department() {
-  const { departments, setDepartments, employees = [], attendance = [], performances = [], leaves = [] } =
+  const { departments, setDepartments } =
     useContext(HrmsContext);
 
   const [departmentName, setDepartmentName] =
