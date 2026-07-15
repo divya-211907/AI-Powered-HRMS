@@ -19,18 +19,20 @@ public class DatabaseSeeder implements CommandLineRunner {
     public void run(String... args) throws Exception {
         String hrEmail = "24ada52@karpagamtech.ac.in";
         Optional<HrUser> hrOpt = hrUserRepository.findByEmail(hrEmail);
+        HrUser hr;
         if (hrOpt.isEmpty()) {
             System.out.println("Seeding default HR user: " + hrEmail);
-            HrUser hr = new HrUser();
-            hr.setName("Sarmila S");
+            hr = new HrUser();
             hr.setEmail(hrEmail);
-            hr.setPassword(SecurityHelper.encode("Sarmi@123"));
+            hr.setName("Sarmila S");
             hr.setCompanyName("NextGen Tech");
             hr.setFirstLogin(false);
-            hrUserRepository.save(hr);
-            System.out.println("Default HR user seeded successfully!");
         } else {
-            System.out.println("HR user already exists in the database.");
+            System.out.println("Updating default HR user credentials: " + hrEmail);
+            hr = hrOpt.get();
         }
+        hr.setPassword(SecurityHelper.encode("Sarmi@123"));
+        hrUserRepository.save(hr);
+        System.out.println("Default HR user seeded/updated successfully!");
     }
 }
