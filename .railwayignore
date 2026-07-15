@@ -1,0 +1,5 @@
+# Ignore frontend assets for backend service deployment
+frontend/
+.git/
+node_modules/
+target/

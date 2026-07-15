@@ -28,18 +28,59 @@ public class AuthController {
         return hrUserRepository.save(user);
     }
 
+    public static class HrLoginRequest {
+        private String email;
+        private String password;
+
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
+        public String getPassword() { return password; }
+        public void setPassword(String password) { this.password = password; }
+    }
+
     @PostMapping("/login")
-    public org.springframework.http.ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
+    public org.springframework.http.ResponseEntity<?> login(@RequestBody HrLoginRequest req) {
+        String email = req.getEmail();
+        String password = req.getPassword();
+
+        System.out.println("Login Attempt");
+        System.out.println("Email: " + email);
+        System.out.println("Password: " + password);
+
         Optional<HrUser> hrOpt = hrUserRepository.findByEmail(email);
-        if (hrOpt.isEmpty() || !com.hrms.util.SecurityHelper.matches(password, hrOpt.get().getPassword())) {
+        if (hrOpt.isEmpty()) {
+            System.out.println("User not found: " + email);
             java.util.Map<String, Object> error = new java.util.HashMap<>();
             error.put("success", false);
             error.put("message", "Invalid Email or Password");
             return org.springframework.http.ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
         }
+
         HrUser hr = hrOpt.get();
+        System.out.println("Database email: " + hr.getEmail());
+        System.out.println("Database password: " + hr.getPassword());
+        System.out.println("Incoming password: " + password);
+
+        boolean match = com.hrms.util.SecurityHelper.matches(password, hr.getPassword());
+        System.out.println("Password match result: " + match);
+
+        if (!match) {
+            java.util.Map<String, Object> error = new java.util.HashMap<>();
+            error.put("success", false);
+            error.put("message", "Invalid Email or Password");
+            return org.springframework.http.ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+        }
+
         hr.setToken(com.hrms.util.JwtHelper.generateToken(hr.getEmail(), "HR"));
-        return org.springframework.http.ResponseEntity.ok(hr);
+
+        java.util.Map<String, Object> success = new java.util.HashMap<>();
+        success.put("success", true);
+        success.put("id", hr.getId());
+        success.put("name", hr.getName());
+        success.put("email", hr.getEmail());
+        success.put("token", hr.getToken());
+
+        return org.springframework.http.ResponseEntity.ok(success);
     }
 
     @PostMapping("/login-otp")
