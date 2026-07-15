@@ -1,0 +1,100 @@
+.performance-container {
+  padding: 20px 0;
+  min-height: 100vh;
+  background: var(--bg-app);
+  transition: background-color 0.3s ease;
+}
+
+.performance-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.performance-header h1 {
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.performance-header p {
+  color: var(--text-secondary);
+}
+
+.performance-card {
+  background: var(--bg-panel);
+  border: var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s;
+  color: var(--text-primary);
+}
+
+.performance-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.employee-info {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.rating-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.rating-box {
+  background: rgba(245, 158, 11, 0.08);
+  border: var(--card-border);
+  padding: 25px;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  min-width: 250px;
+}
+
+.rating-box h4 {
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.stars {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.rating-box h2 {
+  color: var(--accent-warning);
+  margin: 0;
+}
+
+.remarks-box {
+  background: var(--bg-app);
+  border: var(--card-border);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.remarks-box h4 {
+  margin-bottom: 10px;
+  color: var(--accent-primary);
+}
+
+.remarks-box p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.no-performance {
+  background: var(--bg-panel);
+  border: var(--card-border);
+  padding: 40px;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  color: var(--text-secondary);
+}

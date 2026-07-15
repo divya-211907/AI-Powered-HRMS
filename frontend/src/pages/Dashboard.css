@@ -1,0 +1,77 @@
+.cards{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.card{
+width:220px;
+padding:20px;
+border-radius:15px;
+background:white;
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
+text-align:center;
+}
+.cards{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.card{
+  width:220px;
+  padding:20px;
+  border-radius:15px;
+
+  background-image:url("https://www.vecteezy.com/free-photos/human-resources-background");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+
+  color:white;
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+  text-align:center;
+
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.45);
+}
+
+.card *{
+  position:relative;
+  z-index:1;
+}
+.employees{
+  background-image:url("../assets/employees.jpg");
+}
+
+.attendance{
+  background-image:url("../assets/attendance.jpg");
+}
+
+.leave{
+  background-image:url("../assets/leave.jpg");
+}
+
+.payroll{
+  background-image:url("../assets/payroll.jpg");
+}
+
+.notification-item{
+  padding:10px;
+  border-bottom:1px solid var(--border-color);
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.notification-item:hover{
+  background: var(--border-color);
+}

@@ -1,0 +1,74 @@
+.leave-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+  background: var(--bg-app);
+  min-height: 100vh;
+  transition: background-color 0.3s ease;
+}
+
+.leave-card {
+  width: 500px;
+  background: var(--bg-panel);
+  border: var(--card-border);
+  padding: 30px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.leave-card h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--text-primary);
+  font-size: 24px;
+}
+
+.leave-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.leave-form label {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.leave-form input,
+.leave-form textarea {
+  padding: 14px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.leave-form input:focus,
+.leave-form textarea:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+.leave-form button {
+  padding: 14px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-hover));
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+  transition: all 0.3s;
+}
+
+.leave-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.35);
+}

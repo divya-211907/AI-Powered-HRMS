@@ -1,0 +1,264 @@
+.profile-container {
+  padding: 40px 20px;
+  background: var(--bg-app);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.profile-card-wrapper {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* 🚀 Premium Hero Banner Card */
+.profile-hero-card {
+  position: relative;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  border-radius: var(--radius-lg);
+  padding: 35px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(139, 92, 246, 0.2);
+  animation: fadeUp 0.5s ease;
+}
+
+.profile-hero-card.candidate-theme {
+  background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+  box-shadow: 0 12px 30px rgba(6, 182, 212, 0.2);
+}
+
+@media (max-width: 600px) {
+  .profile-hero-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 20px;
+  }
+}
+
+.profile-avatar-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  font-weight: 900;
+  color: white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.profile-hero-meta {
+  z-index: 2;
+}
+
+.profile-badge-pill {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 800;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: inline-block;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-hero-meta h1 {
+  font-size: 28px;
+  font-weight: 900;
+  margin: 0 0 6px 0;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.profile-email-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+.profile-glow-spot {
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+}
+
+/* 📊 Split Grid Cards */
+.profile-widgets-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.profile-widgets-grid.employee-grid-triple {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media (max-width: 900px) {
+  .profile-widgets-grid.employee-grid-triple {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .profile-widgets-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.profile-info-widget {
+  background: var(--bg-panel);
+  border: var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 25px;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.profile-info-widget:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.widget-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1.5px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.widget-icon {
+  font-size: 20px;
+}
+
+.widget-header h3 {
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.widget-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.info-value {
+  font-size: 13px;
+  color: var(--text-primary);
+  font-weight: 750;
+  text-align: right;
+  max-width: 60%;
+  word-break: break-all;
+}
+
+.highlight-net-salary {
+  border-top: 1.5px solid var(--border-color);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+.empty-widget-data {
+  text-align: center;
+  padding: 30px 10px;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.empty-widget-data span {
+  font-size: 28px;
+  opacity: 0.8;
+}
+
+.empty-widget-data p {
+  font-size: 12.5px;
+  margin: 0;
+  font-style: italic;
+}
+
+/* 📊 Workspace Telemetry statistics metrics */
+.telemetry-full-card {
+  grid-column: 1 / -1;
+  background: var(--bg-panel);
+}
+
+.telemetry-count {
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--accent-primary);
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.telemetry-label {
+  font-size: 12.5px;
+  font-weight: 750;
+  color: var(--text-primary);
+}
+
+.empty-profile {
+  text-align: center;
+  padding: 50px 20px;
+  color: var(--text-secondary);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

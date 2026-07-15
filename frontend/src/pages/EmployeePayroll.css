@@ -1,0 +1,105 @@
+.payroll-container {
+  padding: 20px 0;
+  background: var(--bg-app);
+  min-height: 100vh;
+  transition: background-color 0.3s ease;
+}
+
+.payroll-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.payroll-header h1 {
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.payroll-header p {
+  color: var(--text-secondary);
+}
+
+.payroll-card {
+  background: var(--bg-panel);
+  border: var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s;
+}
+
+.payroll-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.employee-name {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.salary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.salary-box {
+  background: var(--bg-app);
+  border: var(--card-border);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.salary-box h4 {
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.salary-box p {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--accent-primary);
+}
+
+.bonus {
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.bonus p {
+  color: var(--accent-success);
+}
+
+.deduction {
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.deduction p {
+  color: var(--accent-danger);
+}
+
+.net-salary {
+  margin-top: 25px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-hover));
+  color: white;
+  text-align: center;
+  padding: 18px;
+  border-radius: 12px;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+}
+
+.no-data {
+  background: var(--bg-panel);
+  border: var(--card-border);
+  padding: 40px;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  color: var(--text-secondary);
+}
