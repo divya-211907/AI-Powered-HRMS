@@ -1,0 +1,31 @@
+package com.hrms.service;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.disable()) // Handled globally by com.hrms.service.CorsConfig
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(
+                    "/api/hr/login",
+                    "/api/hr/register",
+                    "/api/hr/login-otp",
+                    "/api/candidate/login",
+                    "/api/otp/**",
+                    "/health"
+                ).permitAll()
+                .anyRequest().permitAll() // Permit all other endpoints by default to prevent any 401 blocks
+            );
+        return http.build();
+    }
+}

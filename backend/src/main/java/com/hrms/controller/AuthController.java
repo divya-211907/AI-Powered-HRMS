@@ -29,14 +29,17 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public HrUser login(@RequestParam String email, @RequestParam String password) {
+    public org.springframework.http.ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
         Optional<HrUser> hrOpt = hrUserRepository.findByEmail(email);
         if (hrOpt.isEmpty() || !com.hrms.util.SecurityHelper.matches(password, hrOpt.get().getPassword())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
+            java.util.Map<String, Object> error = new java.util.HashMap<>();
+            error.put("success", false);
+            error.put("message", "Invalid Email or Password");
+            return org.springframework.http.ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
         }
         HrUser hr = hrOpt.get();
         hr.setToken(com.hrms.util.JwtHelper.generateToken(hr.getEmail(), "HR"));
-        return hr;
+        return org.springframework.http.ResponseEntity.ok(hr);
     }
 
     @PostMapping("/login-otp")

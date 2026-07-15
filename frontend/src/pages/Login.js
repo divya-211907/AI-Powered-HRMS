@@ -213,7 +213,7 @@ function Login() {
       navigate("/employee-dashboard");
     } catch (err) {
       console.error(err);
-      setError("Login failed. Please verify credentials.");
+      setError(err.response?.data?.message || "Login failed. Please verify credentials.");
     } finally {
       setLoading(false);
     }
