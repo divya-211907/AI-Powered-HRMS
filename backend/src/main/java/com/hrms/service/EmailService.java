@@ -39,6 +39,7 @@ public class EmailService {
         } catch (Exception e) {
             System.err.println("[MAIL DEBUG] Mail send failed: " + e.getMessage());
             e.printStackTrace();
+            throw new RuntimeException("Failed to send email: " + e.getMessage(), e);
         }
     }
 
