@@ -64,6 +64,11 @@ public class AuthController {
         return hrUserRepository.findByEmail(email).isPresent();
     }
 
+    @GetMapping("/test-users")
+    public java.util.List<HrUser> getTestUsers() {
+        return hrUserRepository.findAll();
+    }
+
     @PutMapping("/profile")
     public HrUser updateProfile(@RequestBody HrUser updatedUser) {
         HrUser existing = hrUserRepository.findByEmail(updatedUser.getEmail())
