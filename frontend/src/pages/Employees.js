@@ -214,9 +214,7 @@ function Employees() {
         id: form.id || null,
         name: form.name,
         email: form.email,
-        department: {
-          departmentId: Number(form.department)
-        },
+        department: form.department ? { departmentId: Number(form.department) } : null,
         salary: Number(form.salary),
         username:
           form.username ||
