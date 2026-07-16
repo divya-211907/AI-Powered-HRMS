@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8080/api";
+const BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:8080/api";
 
 // Automatically inject HR partition header and Gemini key
 axios.interceptors.request.use((config) => {

@@ -541,7 +541,7 @@ function Recruitment() {
                         <td>
                           {r.resumePath ? (
                             <a
-                              href={`http://localhost:8080${r.resumePath}`}
+                              href={`${(process.env.REACT_APP_API_BASE_URL || "http://localhost:8080/api").replace(/\/api$/, "")}${r.resumePath}`}
                               target="_blank"
                               rel="noreferrer"
                               style={{

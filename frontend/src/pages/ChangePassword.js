@@ -66,7 +66,8 @@ function ChangePassword() {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:8080/api/hr/change-password", {
+      const BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:8080/api";
+      await axios.post(`${BASE_URL}/hr/change-password`, {
         email: currentUser?.email,
         role: role,
         currentPassword,

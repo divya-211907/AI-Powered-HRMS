@@ -310,8 +310,9 @@ export const askAiAssistant = async (query, contextData, currentUser) => {
   const apiKey = localStorage.getItem("gemini_api_key") || "";
 
   try {
+    const BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:8080/api";
     const response = await axios.post(
-      "http://localhost:8080/api/ai/chat",
+      `${BASE_URL}/ai/chat`,
       { message: query },
       {
         headers: {
