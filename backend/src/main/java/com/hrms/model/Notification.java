@@ -103,6 +103,29 @@ public class Notification {
         }
     }
 
+    @PostPersist
+    public void postPersist() {
+        if (this.email != null && !this.email.isEmpty()) {
+            try {
+                org.springframework.context.ApplicationContext ctx = com.hrms.util.SpringContextHelper.getContext();
+                if (ctx != null) {
+                    com.hrms.service.EmailService emailService = ctx.getBean(com.hrms.service.EmailService.class);
+                    String subject = this.title != null ? this.title : "New Notification";
+                    String messageText = this.message != null ? this.message : "";
+                    
+                    System.out.println("[MAIL DEBUG] Recipient: " + this.email);
+                    System.out.println("[MAIL DEBUG] Subject: " + subject);
+                    
+                    emailService.sendWorkflowMail(this.email, subject, messageText);
+                    
+                    System.out.println("[MAIL DEBUG] Mail send success");
+                }
+            } catch (Exception ex) {
+                System.err.println("[MAIL DEBUG] Mail send failed: " + ex.getMessage());
+            }
+        }
+    }
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getTitle() { return title; }

@@ -12,24 +12,8 @@ public class NotificationService {
     @Autowired
     private NotificationRepository repo;
 
-    @Autowired
-    private EmailService emailService;
-
     public Notification addNotification(Notification notification) {
-        boolean isNew = (notification.getId() == null);
-        Notification saved = repo.save(notification);
-        
-        if (isNew && saved.getEmail() != null && !saved.getEmail().isEmpty()) {
-            try {
-                String subject = saved.getTitle() != null ? saved.getTitle() : "New Notification";
-                String messageText = saved.getMessage() != null ? saved.getMessage() : "";
-                emailService.sendWorkflowMail(saved.getEmail(), subject, messageText);
-                System.out.println("Email notification sent to: " + saved.getEmail());
-            } catch (Exception ex) {
-                System.err.println("Failed to send email notification to: " + saved.getEmail() + " - " + ex.getMessage());
-            }
-        }
-        return saved;
+        return repo.save(notification);
     }
 
     public List<Notification> getAllNotifications() {

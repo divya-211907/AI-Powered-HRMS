@@ -11,6 +11,9 @@ import java.util.Random;
 public class EmailService {
     private final JavaMailSender mailSender;
 
+    @org.springframework.beans.factory.annotation.Value("${spring.mail.username:hrms62000@gmail.com}")
+    private String fromEmail;
+
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
@@ -22,17 +25,19 @@ public class EmailService {
     }
 
     private void sendHtmlEmail(String to, String subject, String htmlContent) {
+        System.out.println("[MAIL DEBUG] Recipient: " + to);
+        System.out.println("[MAIL DEBUG] Subject: " + subject);
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-            helper.setFrom("hrms62000@gmail.com");
+            helper.setFrom(fromEmail);
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(htmlContent, true);
             mailSender.send(message);
-            System.out.println("HTML MAIL SENT SUCCESSFULLY TO: " + to);
+            System.out.println("[MAIL DEBUG] Mail send success");
         } catch (Exception e) {
-            System.err.println("HTML MAIL SENDING FAILED: " + e.getMessage());
+            System.err.println("[MAIL DEBUG] Mail send failed: " + e.getMessage());
             e.printStackTrace();
         }
     }
