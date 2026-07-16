@@ -15,7 +15,7 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @org.springframework.beans.factory.annotation.Value("${spring.web.cors.allowed-origins:http://localhost:3000}")
+    @org.springframework.beans.factory.annotation.Value("${spring.web.cors.allowed-origins:http://localhost:3000,https://ai-powered-hrms-flax.vercel.app}")
     private String allowedOrigins;
 
     @Bean
@@ -43,7 +43,7 @@ public class SecurityConfig {
         if (allowedOrigins != null && !allowedOrigins.trim().isEmpty()) {
             configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
         } else {
-            configuration.setAllowedOrigins(Arrays.asList("*"));
+            configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://ai-powered-hrms-flax.vercel.app"));
         }
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
