@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
-import { BASE_URL } from "../services/ApiService";
 
 function ChangePassword() {
   const { currentUser, role, updateCurrentUser } = useContext(AuthContext);
@@ -67,7 +66,7 @@ function ChangePassword() {
 
     setLoading(true);
     try {
-      await axios.post(`${BASE_URL}/hr/change-password`, {
+      await axios.post("http://localhost:8080/api/hr/change-password", {
         email: currentUser?.email,
         role: role,
         currentPassword,

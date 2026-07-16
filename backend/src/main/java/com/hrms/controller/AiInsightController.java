@@ -119,10 +119,6 @@ public class AiInsightController {
             @PathVariable Long id,
             @RequestHeader(value = "X-Gemini-API-Key", required = false) String apiKey) {
         
-        if (apiKey == null || apiKey.trim().isEmpty()) {
-            apiKey = System.getenv("GEMINI_API_KEY") != null ? System.getenv("GEMINI_API_KEY") : System.getenv("OPENAI_API_KEY");
-        }
-        
         Employee emp = employeeRepository.findById(id)
                 .orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(
                         org.springframework.http.HttpStatus.NOT_FOUND, "Employee not found"));
@@ -270,10 +266,6 @@ public class AiInsightController {
     public List<java.util.Map<String, Object>> getWellnessSentinel(
             @RequestHeader(value = "X-HR-Email", required = false) String hrEmail,
             @RequestHeader(value = "X-Gemini-API-Key", required = false) String apiKey) {
-
-        if (apiKey == null || apiKey.trim().isEmpty()) {
-            apiKey = System.getenv("GEMINI_API_KEY") != null ? System.getenv("GEMINI_API_KEY") : System.getenv("OPENAI_API_KEY");
-        }
 
         List<Employee> emps;
         if (hrEmail != null && !hrEmail.isEmpty()) {

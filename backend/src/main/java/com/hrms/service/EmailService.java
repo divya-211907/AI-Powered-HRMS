@@ -11,9 +11,6 @@ import java.util.Random;
 public class EmailService {
     private final JavaMailSender mailSender;
 
-    @org.springframework.beans.factory.annotation.Value("${app.frontend.url:http://localhost:3000}")
-    private String frontendUrl;
-
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
@@ -138,7 +135,7 @@ public class EmailService {
         }
 
         String body = "<div class='badge " + badgeClass + "'>" + statusText + "</div>" + explanation + remarksHtml;
-        String html = getHtmlTemplate(title, gradient, body, "View Portal", frontendUrl + "/candidate-login");
+        String html = getHtmlTemplate(title, gradient, body, "View Portal", "http://localhost:3000/candidate-login");
         sendHtmlEmail(email, title, html);
     }
 
@@ -165,7 +162,7 @@ public class EmailService {
                 "  <tr><td class='label'>Temporary Password</td><td class='value' style='color:#ef4444; font-family:monospace;'>" + tempPassword + "</td></tr>" +
                 "</table>" +
                 "<p>Please change your password immediately after logging in for safety.</p>";
-        String html = getHtmlTemplate("Welcome Aboard!", "linear-gradient(135deg, #15803d, #22c55e)", body, "Log In to Employee Portal", frontendUrl + "/login");
+        String html = getHtmlTemplate("Welcome Aboard!", "linear-gradient(135deg, #15803d, #22c55e)", body, "Log In to Employee Portal", "http://localhost:3000/login");
         sendHtmlEmail(email, "Welcome to the Company - Selection & Credentials", html);
     }
 
@@ -188,7 +185,7 @@ public class EmailService {
         }
 
         String body = "<div class='badge " + badgeClass + "'>" + status + "</div>" + explanation;
-        String html = getHtmlTemplate(title, gradient, body, "View Portal", frontendUrl + "/login");
+        String html = getHtmlTemplate(title, gradient, body, "View Portal", "http://localhost:3000/login");
         sendHtmlEmail(email, title, html);
     }
 
@@ -200,7 +197,7 @@ public class EmailService {
                 "  <tr><td class='label'>Password</td><td class='value' style='font-family:monospace;'>" + password + "</td></tr>" +
                 "</table>" +
                 "<p>For safety, please revise your password on first login.</p>";
-        String html = getHtmlTemplate("HRMS Access Credentials", "linear-gradient(135deg, #1e3a8a, #3b82f6)", body, "Access HRMS", frontendUrl + "/login");
+        String html = getHtmlTemplate("HRMS Access Credentials", "linear-gradient(135deg, #1e3a8a, #3b82f6)", body, "Access HRMS", "http://localhost:3000/login");
         sendHtmlEmail(to, "HRMS Access Credentials", html);
     }
 
@@ -214,15 +211,15 @@ public class EmailService {
                 "  <tr><td style='padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;'>Temporary Password</td><td style='padding: 8px; border: 1px solid #e2e8f0; font-family: monospace;'>" + generatedPassword + "</td></tr>" +
                 "</table>" +
                 "<p><strong>Important:</strong><br/>You must change your password during your first login.</p>" +
-                "<p><strong>Login URL:</strong><br/><a href='" + frontendUrl + "/login'>" + frontendUrl + "/login</a></p>" +
+                "<p><strong>Login URL:</strong><br/><a href='http://localhost:3000/login'>http://localhost:3000/login</a></p>" +
                 "<p>Regards,<br/>HR Team</p>";
-        String html = getHtmlTemplate("Welcome to NextGen HRMS", "linear-gradient(135deg, #4f46e5, #06b6d4)", body, "Login to Portal", frontendUrl + "/login");
+        String html = getHtmlTemplate("Welcome to NextGen HRMS", "linear-gradient(135deg, #4f46e5, #06b6d4)", body, "Login to Portal", "http://localhost:3000/login");
         sendHtmlEmail(email, "Welcome to NextGen HRMS", html);
     }
 
     public void sendWorkflowMail(String toEmail, String subject, String bodyText) {
         String body = "<p>" + bodyText + "</p>";
-        String html = getHtmlTemplate(subject, "linear-gradient(135deg, #1e3a8a, #3b82f6)", body, "Open Portal", frontendUrl + "/login");
+        String html = getHtmlTemplate(subject, "linear-gradient(135deg, #1e3a8a, #3b82f6)", body, "Open Portal", "http://localhost:3000/login");
         sendHtmlEmail(toEmail, subject, html);
     }
 
@@ -235,7 +232,7 @@ public class EmailService {
                 "  <tr><td class='label'>New Revised Salary</td><td class='value' style='color:#2563eb;'>₹" + String.format("%,.2f", newSalary) + "</td></tr>" +
                 "</table>" +
                 "<p>Thank you for your dedicated service and outstanding contribution to our company.</p>";
-        String html = getHtmlTemplate("Congratulations! Salary Revised", "linear-gradient(135deg, #15803d, #22c55e)", body, "View Increment Letter", frontendUrl + "/login");
+        String html = getHtmlTemplate("Congratulations! Salary Revised", "linear-gradient(135deg, #15803d, #22c55e)", body, "View Increment Letter", "http://localhost:3000/login");
         sendHtmlEmail(email, "Revised Salary and Appraisal Notification", html);
     }
 }

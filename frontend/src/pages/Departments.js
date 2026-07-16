@@ -10,7 +10,7 @@ import {
 } from "../services/ApiService";
 
 function Department() {
-  const { departments, setDepartments } =
+  const { departments, setDepartments, employees = [], attendance = [], performances = [], leaves = [] } =
     useContext(HrmsContext);
 
   const [departmentName, setDepartmentName] =
@@ -37,7 +37,6 @@ function Department() {
   useEffect(() => {
     loadDepartments();
     loadHealthScores();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadHealthScores = async () => {

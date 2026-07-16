@@ -87,9 +87,7 @@ public class LeaveController {
     ) {
         LeaveRequest leave = leaveRequestRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Leave request not found"));
-        String activeKey = (geminiApiKey != null && !geminiApiKey.trim().isEmpty()) ? geminiApiKey 
-                : (System.getenv("GEMINI_API_KEY") != null ? System.getenv("GEMINI_API_KEY") : System.getenv("OPENAI_API_KEY"));
-        return leaveAiService.generateLeaveRecommendation(leave, activeKey);
+        return leaveAiService.generateLeaveRecommendation(leave, geminiApiKey);
     }
 
     @GetMapping("/my-leaves")

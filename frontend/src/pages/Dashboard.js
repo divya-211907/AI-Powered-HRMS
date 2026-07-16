@@ -212,6 +212,11 @@ function Dashboard() {
 
   const upcomingInterviews = recruitments.filter(r => r.status === "Interview Scheduled" || r.status?.toUpperCase() === "INTERVIEW SCHEDULED");
 
+  const newHiresCount = recruitments.filter(r => 
+    r.status?.toUpperCase() === "SELECTED" || 
+    r.status?.toUpperCase() === "HIRED" || 
+    r.status?.toUpperCase() === "OFFER ACCEPTED"
+  ).length;
 
   const totalCandidates = recruitments.length;
   const activeApplications = recruitments.filter(r => r.status !== "Rejected" && r.status !== "Selected" && r.status !== "Hired" && r.status?.toUpperCase() !== "REJECTED" && r.status?.toUpperCase() !== "SELECTED" && r.status?.toUpperCase() !== "HIRED").length;
@@ -240,6 +245,7 @@ function Dashboard() {
   }));
 
   // Dynamic Department Health Scores
+  const deptColors = ["#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ec4899", "#ef4444"];
   const deptHealthData = deptHealthList.map((d, index) => ({
     name: d.departmentName,
     score: d.healthScore,

@@ -30,3 +30,6 @@
 Thumbs.db
 log/
 *.log
+
+# Runtime uploads
+**/uploads/

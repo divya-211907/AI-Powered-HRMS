@@ -21,6 +21,7 @@ function Login() {
   // HR Password Login States
   const [hrEmail, setHrEmail] = useState("");
   const [hrPassword, setHrPassword] = useState("");
+  const [hrLoginMethod, setHrLoginMethod] = useState("password"); // "password" | "otp"
   const [showHrPassword, setShowHrPassword] = useState(false);
   
   // Employee Login States
@@ -86,15 +87,9 @@ function Login() {
     setLoading(true);
     setError("");
     try {
-      const payload = {};
-      if (hrEmail) payload.email = hrEmail.trim();
-      if (hrPassword) payload.password = hrPassword;
-      console.log("HR Login Payload:", payload);
-
-      const res = await loginHr(payload.email, payload.password);
+      const res = await loginHr(hrEmail.trim(), hrPassword);
       if (res.data) {
-        const userData = res.data.user || res.data;
-        login(userData, "HR");
+        login(res.data, "HR");
         alert("HR Login Successful!");
         navigate("/dashboard");
       }
@@ -219,7 +214,7 @@ function Login() {
       navigate("/employee-dashboard");
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.message || "Login failed. Please verify credentials.");
+      setError("Login failed. Please verify credentials.");
     } finally {
       setLoading(false);
     }

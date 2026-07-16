@@ -10,8 +10,7 @@ import {
   getResumeExtraction,
   suggestInterviewSlot,
   scheduleInterview,
-  deleteRecruitment,
-  BASE_URL
+  deleteRecruitment
 } from "../services/ApiService";
 
 function Recruitment() {
@@ -55,7 +54,6 @@ function Recruitment() {
         setSlotSkipCount(0);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newStatus, showModal, selectedCandidate]);
 
   const fetchAiSlot = async (candidateId, skip) => {
@@ -543,7 +541,7 @@ function Recruitment() {
                         <td>
                           {r.resumePath ? (
                             <a
-                              href={`${BASE_URL.replace("/api", "")}${r.resumePath}`}
+                              href={`http://localhost:8080${r.resumePath}`}
                               target="_blank"
                               rel="noreferrer"
                               style={{

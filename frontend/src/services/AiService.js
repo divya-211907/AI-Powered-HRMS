@@ -1,10 +1,9 @@
 import axios from "axios";
-import { BASE_URL } from "./ApiService";
 
 /**
  * Builds the comprehensive text context of the organization for the Gemini prompt (Admin/HR fallback)
  */
-export const compileContext = (contextData, currentUser) => {
+const compileContext = (contextData, currentUser) => {
   const {
     employees = [],
     leaves = [],
@@ -42,7 +41,7 @@ INSTRUCTIONS:
 /**
  * Builds isolated Employee context for Gemini prompt
  */
-export const compileEmployeeContext = (contextData, currentUser) => {
+const compileEmployeeContext = (contextData, currentUser) => {
   const {
     employees = [],
     leaves = [],
@@ -94,7 +93,7 @@ INSTRUCTIONS:
 /**
  * Builds isolated Candidate context for Gemini prompt
  */
-export const compileCandidateContext = (contextData, currentUser) => {
+const compileCandidateContext = (contextData, currentUser) => {
   const { recruitments = [] } = contextData;
   const myRecRecord = recruitments.find(r => r.email?.toLowerCase() === currentUser?.email?.toLowerCase());
 
@@ -138,7 +137,7 @@ INSTRUCTIONS:
 /**
  * Rules-based Local Summarizer for Demo Mode (Offline / No API Key)
  */
-export const runLocalDemoMode = (query, contextData) => {
+const runLocalDemoMode = (query, contextData) => {
   const q = query.toLowerCase();
   const {
     employees = [],
@@ -187,7 +186,7 @@ ${stars || "*No performance reviews have been registered yet.*"}`;
 /**
  * Rules-based Local Summarizer for Employee Portal
  */
-export const runLocalEmployeeDemo = (query, contextData, currentUser) => {
+const runLocalEmployeeDemo = (query, contextData, currentUser) => {
   const q = query.toLowerCase();
   const { employees = [], attendance = [], leaves = [], payrolls = [] } = contextData;
   const currentEmp = employees.find(e => e.email?.toLowerCase() === currentUser?.email?.toLowerCase() || e.username?.toLowerCase() === currentUser?.username?.toLowerCase());
@@ -249,7 +248,7 @@ Try asking:
 /**
  * Rules-based Local Summarizer for Candidate Portal
  */
-export const runLocalCandidateDemo = (query, contextData, currentUser) => {
+const runLocalCandidateDemo = (query, contextData, currentUser) => {
   const q = query.toLowerCase();
   const { recruitments = [] } = contextData;
   const myRec = recruitments.find(r => r.email?.toLowerCase() === currentUser?.email?.toLowerCase());
@@ -312,7 +311,7 @@ export const askAiAssistant = async (query, contextData, currentUser) => {
 
   try {
     const response = await axios.post(
-      `${BASE_URL}/ai/chat`,
+      "http://localhost:8080/api/ai/chat",
       { message: query },
       {
         headers: {
@@ -328,14 +327,3 @@ export const askAiAssistant = async (query, contextData, currentUser) => {
     return "I encountered an error communicating with the AI backend. Please verify that the backend application is running.";
   }
 };
-
-if (typeof window !== "undefined") {
-  window._aiHelpers = {
-    compileContext,
-    compileEmployeeContext,
-    compileCandidateContext,
-    runLocalDemoMode,
-    runLocalEmployeeDemo,
-    runLocalCandidateDemo
-  };
-}

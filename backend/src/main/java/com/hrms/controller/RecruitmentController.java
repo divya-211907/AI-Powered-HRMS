@@ -61,9 +61,6 @@ public class RecruitmentController {
             @RequestParam(value = "jobId", required = false) Long jobId,
             @RequestHeader(value = "X-Gemini-API-Key", required = false) String geminiApiKey
     ) throws Exception {
-        if (geminiApiKey == null || geminiApiKey.trim().isEmpty()) {
-            geminiApiKey = System.getenv("GEMINI_API_KEY") != null ? System.getenv("GEMINI_API_KEY") : System.getenv("OPENAI_API_KEY");
-        }
         byte[] fileBytes = file.getBytes();
         String fileName = file.getOriginalFilename();
         String extractedText = recruitmentService.parseResumeText(fileBytes, fileName);
@@ -82,9 +79,6 @@ public class RecruitmentController {
             @RequestHeader(value = "X-HR-Email", required = false) String hrEmail,
             @RequestHeader(value = "X-Gemini-API-Key", required = false) String geminiApiKey) {
         
-        if (geminiApiKey == null || geminiApiKey.trim().isEmpty()) {
-            geminiApiKey = System.getenv("GEMINI_API_KEY") != null ? System.getenv("GEMINI_API_KEY") : System.getenv("OPENAI_API_KEY");
-        }
         Recruitment r = new Recruitment();
         r.setCandidateName(dto.getCandidateName());
         r.setEmail(dto.getEmail());
@@ -133,9 +127,6 @@ public class RecruitmentController {
             @RequestHeader(value = "X-Gemini-API-Key", required = false) String geminiApiKey
     ) throws Exception {
 
-        if (geminiApiKey == null || geminiApiKey.trim().isEmpty()) {
-            geminiApiKey = System.getenv("GEMINI_API_KEY") != null ? System.getenv("GEMINI_API_KEY") : System.getenv("OPENAI_API_KEY");
-        }
         Recruitment r = new Recruitment();
         r.setCandidateName(candidateName);
         r.setEmail(email);

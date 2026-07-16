@@ -41,7 +41,6 @@ function Profile() {
         setShiftEnd(user.shiftEnd || "17:00");
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [role]);
 
   const handleSaveHrSettings = async () => {

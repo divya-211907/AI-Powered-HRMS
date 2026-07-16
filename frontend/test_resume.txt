@@ -1,0 +1,14 @@
+Jane Doe
+Email: jane.doe@example.com
+Phone: 9988776655
+Skills: Java, Spring Boot, React, Javascript, SQL
+Degree: B.Tech in Computer Science
+College: National Institute of Technology
+Experience: 3 Years
+Gender: Female
+Certifications: AWS Solutions Architect, Oracle Java Certification
+LinkedIn: https://linkedin.com/in/janedoe
+GitHub: https://github.com/janedoe
+Portfolio: https://janedoe.dev
+Location: Seattle, WA
+Projects: E-Commerce Platform, Chat Application

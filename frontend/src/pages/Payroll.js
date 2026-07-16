@@ -50,7 +50,6 @@ function Payroll() {
   useEffect(() => {
     loadPayroll();
     loadRecommendations();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadRecommendations = async () => {
@@ -111,6 +110,14 @@ function Payroll() {
       console.error(err);
       setPayrolls([]);
     }
+  };
+
+  const generatePayrollId = () => {
+    if (safePayroll.length === 0) return 1;
+    const maxId = Math.max(
+      ...safePayroll.map((p) => Number(p.id || 0))
+    );
+    return maxId + 1;
   };
 
   const handleChange = (e) => {

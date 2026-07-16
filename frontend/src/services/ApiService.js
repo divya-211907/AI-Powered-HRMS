@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:8080/api";
+const BASE_URL = "http://localhost:8080/api";
 
 // Automatically inject HR partition header and Gemini key
 axios.interceptors.request.use((config) => {
@@ -887,7 +887,7 @@ export const getDashboardInsights = () =>
   );
 
 export const registerHr = (user) => axios.post(`${BASE_URL}/hr/register`, user);
-export const loginHr = (email, password) => axios.post(`${BASE_URL}/hr/login`, { email, password });
+export const loginHr = (email, password) => axios.post(`${BASE_URL}/hr/login?email=${email}&password=${password}`);
 export const loginHrOtp = (email) => axios.post(`${BASE_URL}/hr/login-otp?email=${email}`);
 export const sendGenericOtp = (email) => axios.post(`${BASE_URL}/otp/send-generic?email=${email}`);
 export const verifyGenericOtp = (email, otp) => axios.post(`${BASE_URL}/otp/verify-generic?email=${email}&otp=${otp}`);

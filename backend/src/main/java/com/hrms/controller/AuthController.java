@@ -28,72 +28,15 @@ public class AuthController {
         return hrUserRepository.save(user);
     }
 
-    public static class HrLoginRequest {
-        private String email;
-        private String password;
-
-        public String getEmail() { return email; }
-        public void setEmail(String email) { this.email = email; }
-        public String getPassword() { return password; }
-        public void setPassword(String password) { this.password = password; }
-    }
-
     @PostMapping("/login")
-    public org.springframework.http.ResponseEntity<?> login(
-            @RequestBody(required = false) HrLoginRequest req,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String password) {
-        
-        String finalEmail = null;
-        String finalPassword = null;
-
-        if (req != null) {
-            finalEmail = req.getEmail();
-            finalPassword = req.getPassword();
+    public HrUser login(@RequestParam String email, @RequestParam String password) {
+        Optional<HrUser> hrOpt = hrUserRepository.findByEmail(email);
+        if (hrOpt.isEmpty() || !com.hrms.util.SecurityHelper.matches(password, hrOpt.get().getPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
-
-        if (finalEmail == null || finalEmail.isEmpty()) {
-            finalEmail = email;
-        }
-        if (finalPassword == null || finalPassword.isEmpty()) {
-            finalPassword = password;
-        }
-
-        System.out.println("Received Email: " + finalEmail);
-
-        Optional<HrUser> hrOpt = hrUserRepository.findByEmail(finalEmail);
-        if (hrOpt.isEmpty()) {
-            System.out.println("User Found or Not: Not Found");
-            java.util.Map<String, Object> error = new java.util.HashMap<>();
-            error.put("success", false);
-            error.put("message", "HR account not found");
-            System.out.println("Response Returned: HR account not found");
-            return org.springframework.http.ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
-        }
-
-        System.out.println("User Found or Not: Found");
         HrUser hr = hrOpt.get();
-
-        boolean match = com.hrms.util.SecurityHelper.matches(finalPassword, hr.getPassword());
-        System.out.println("Password Match Status: " + match);
-
-        if (!match) {
-            java.util.Map<String, Object> error = new java.util.HashMap<>();
-            error.put("success", false);
-            error.put("message", "Invalid password");
-            System.out.println("Response Returned: Invalid password");
-            return org.springframework.http.ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
-        }
-
         hr.setToken(com.hrms.util.JwtHelper.generateToken(hr.getEmail(), "HR"));
-
-        java.util.Map<String, Object> success = new java.util.HashMap<>();
-        success.put("success", true);
-        success.put("message", "Login successful");
-        success.put("user", hr);
-
-        System.out.println("Response Returned: Login successful");
-        return org.springframework.http.ResponseEntity.ok(success);
+        return hr;
     }
 
     @PostMapping("/login-otp")

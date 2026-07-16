@@ -27,10 +27,7 @@ public class AiChatController {
             return ResponseEntity.badRequest().body("Message query cannot be empty");
         }
 
-        String activeKey = (apiKey != null && !apiKey.trim().isEmpty()) ? apiKey 
-                : (System.getenv("GEMINI_API_KEY") != null ? System.getenv("GEMINI_API_KEY") : System.getenv("OPENAI_API_KEY"));
-
-        String reply = aiChatService.processChat(message, email, role, activeKey);
+        String reply = aiChatService.processChat(message, email, role, apiKey);
         return ResponseEntity.ok(reply);
     }
 }

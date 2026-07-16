@@ -15,7 +15,6 @@ public class HrmsBackendApplication implements WebMvcConfigurer {
 
     public static void main(String[] args) {
         SpringApplication.run(HrmsBackendApplication.class, args);
-        System.out.println("HRMS Backend Started");
     }
 
     @Override
