@@ -30,11 +30,20 @@ public class AuthController {
 
     @PostMapping("/login")
     public HrUser login(@RequestParam String email, @RequestParam String password) {
+        System.out.println("[HR LOGIN DEBUG] Received login request for email: '" + email + "' with password: '" + password + "'");
         Optional<HrUser> hrOpt = hrUserRepository.findByEmail(email);
-        if (hrOpt.isEmpty() || !com.hrms.util.SecurityHelper.matches(password, hrOpt.get().getPassword())) {
+        if (hrOpt.isEmpty()) {
+            System.out.println("[HR LOGIN DEBUG] Email '" + email + "' not found in database!");
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
         HrUser hr = hrOpt.get();
+        boolean bcryptMatches = new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder().matches(password, hr.getPassword());
+        boolean helperMatches = com.hrms.util.SecurityHelper.matches(password, hr.getPassword());
+        System.out.println("[HR LOGIN DEBUG] Stored password in DB: '" + hr.getPassword() + "'");
+        System.out.println("[HR LOGIN DEBUG] BCrypt matches: " + bcryptMatches + ", SecurityHelper matches: " + helperMatches);
+        if (!helperMatches) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
+        }
         hr.setToken(com.hrms.util.JwtHelper.generateToken(hr.getEmail(), "HR"));
         return hr;
     }
