@@ -66,7 +66,24 @@ public class EmployeeService {
         e.setPassword(com.hrms.util.SecurityHelper.encode(e.getPassword()));
         e.setPasswordHistory(e.getPassword());
         e.setFirstLogin(true);
-        return repo.save(e);
+        Employee saved = repo.save(e);
+        try {
+            com.hrms.model.Notification notification = new com.hrms.model.Notification();
+            notification.setEmail(saved.getEmail());
+            notification.setTitle("Welcome to the Company");
+            notification.setMessage("Welcome to the team, " + saved.getName() + "! Your employee profile has been created successfully.");
+            notification.setType("EMPLOYEE_ADDED");
+            notification.setRead(false);
+            
+            org.springframework.context.ApplicationContext ctx = com.hrms.util.SpringContextHelper.getContext();
+            if (ctx != null) {
+                com.hrms.service.NotificationService notifService = ctx.getBean(com.hrms.service.NotificationService.class);
+                notifService.addNotification(notification);
+            }
+        } catch (Exception ex) {
+            System.err.println("Failed to save employee welcome notification: " + ex.getMessage());
+        }
+        return saved;
     }
     public Employee update(Long id, Employee emp) {
 

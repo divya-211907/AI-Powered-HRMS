@@ -20,8 +20,12 @@ public class Notification {
     private String message;
 
     private String type;
-    private String role; // HR, EMPLOYEE, CANDIDATE, ADMIN
-    private Long userId;
+
+    @Column(name = "recipient_role")
+    private String recipientRole; // HR, EMPLOYEE, CANDIDATE, ADMIN
+
+    @Column(name = "recipient_id")
+    private Long recipientId;
 
     @Column(name = "is_read")
     private boolean isRead;
@@ -67,7 +71,7 @@ public class Notification {
         }
         
         // Auto-detect role and userId from email/receiver if not set
-        if ((this.role == null || this.userId == null) && this.email != null && !this.email.isEmpty()) {
+        if ((this.recipientRole == null || this.recipientId == null) && this.email != null && !this.email.isEmpty()) {
             try {
                 org.springframework.context.ApplicationContext ctx = com.hrms.util.SpringContextHelper.getContext();
                 if (ctx != null) {
@@ -78,24 +82,24 @@ public class Notification {
                     // 1. Check HR
                     java.util.Optional<com.hrms.model.HrUser> hrOpt = hrRepo.findByEmail(this.email);
                     if (hrOpt.isPresent()) {
-                        this.role = "HR";
-                        this.userId = hrOpt.get().getId();
+                        this.recipientRole = "HR";
+                        this.recipientId = hrOpt.get().getId();
                         return;
                     }
                     
                     // 2. Check Employee
                     java.util.List<com.hrms.model.Employee> emps = empRepo.findAllByEmail(this.email);
                     if (!emps.isEmpty()) {
-                        this.role = "EMPLOYEE";
-                        this.userId = emps.get(0).getId();
+                        this.recipientRole = "EMPLOYEE";
+                        this.recipientId = emps.get(0).getId();
                         return;
                     }
                     
                     // 3. Check Candidate
                     java.util.Optional<com.hrms.model.Recruitment> rOpt = recruitRepo.findByEmail(this.email);
                     if (rOpt.isPresent()) {
-                        this.role = "CANDIDATE";
-                        this.userId = rOpt.get().getId();
+                        this.recipientRole = "CANDIDATE";
+                        this.recipientId = rOpt.get().getId();
                         return;
                     }
                 }
@@ -134,10 +138,16 @@ public class Notification {
     public void setMessage(String message) { this.message = message; }
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
+    public String getRecipientRole() { return recipientRole; }
+    public void setRecipientRole(String recipientRole) { this.recipientRole = recipientRole; }
+    public Long getRecipientId() { return recipientId; }
+    public void setRecipientId(Long recipientId) { this.recipientId = recipientId; }
+
+    // Legacy/Alias support
+    public String getRole() { return recipientRole; }
+    public void setRole(String role) { this.recipientRole = role; }
+    public Long getUserId() { return recipientId; }
+    public void setUserId(Long userId) { this.recipientId = userId; }
     public boolean isRead() { return isRead; }
     public void setRead(boolean isRead) { this.isRead = isRead; }
     public LocalDateTime getCreatedAt() { return createdAt; }

@@ -65,6 +65,9 @@ public class EmailOTPController {
         return response;
     }
    
+    @Autowired
+    private com.hrms.repository.RecruitmentRepository recruitmentRepository;
+
     @PostMapping("/verify")
     public Recruitment verify(@RequestBody Recruitment req) {
         String email = req.getEmail();
@@ -92,8 +95,17 @@ public class EmailOTPController {
 
         if (otpData.getOtp().equals(enteredOtp.trim())) {
             OTPStore.otpMap.remove(email);
-            Recruitment r = new Recruitment();
-            r.setEmail(email);
+            
+            java.util.Optional<Recruitment> rOpt = recruitmentRepository.findByEmail(email);
+            Recruitment r;
+            if (rOpt.isPresent()) {
+                r = rOpt.get();
+            } else {
+                r = new Recruitment();
+                r.setEmail(email);
+                r.setCandidateName("Candidate");
+            }
+            r.setToken(com.hrms.util.JwtHelper.generateToken(r.getEmail(), "CANDIDATE"));
             return r;
         }
 

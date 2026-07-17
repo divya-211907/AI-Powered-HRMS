@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
     
-    @Query("SELECT n FROM Notification n WHERE n.role = :role OR n.userId = :userId ORDER BY n.createdAt DESC")
+    @Query("SELECT n FROM Notification n WHERE n.recipientRole = :role OR n.recipientId = :userId ORDER BY n.createdAt DESC")
     List<Notification> fetchNotificationsForUser(@Param("role") String role, @Param("userId") Long userId);
     
-    @Query("SELECT COUNT(n) FROM Notification n WHERE (n.role = :role OR n.userId = :userId) AND n.isRead = false")
+    @Query("SELECT COUNT(n) FROM Notification n WHERE (n.recipientRole = :role OR n.recipientId = :userId) AND n.isRead = false")
     long countUnreadNotificationsForUser(@Param("role") String role, @Param("userId") Long userId);
 }

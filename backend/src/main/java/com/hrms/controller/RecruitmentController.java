@@ -199,6 +199,7 @@ public class RecruitmentController {
     public Recruitment login(@RequestBody RecruitmentDto req) {
         Recruitment r = recruitmentService.getCandidateByEmail(req.getEmail())
             .orElseThrow(() -> new RecruitmentException("Candidate not found"));
+        r.setToken(com.hrms.util.JwtHelper.generateToken(r.getEmail(), "CANDIDATE"));
         return r;
     }
 }

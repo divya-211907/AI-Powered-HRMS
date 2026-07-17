@@ -2,18 +2,23 @@ import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:8080/api";
 
-// Automatically inject HR partition header and Gemini key
+// Automatically inject HR partition header, JWT token, and Gemini key
 axios.interceptors.request.use((config) => {
   const user = JSON.parse(localStorage.getItem("currentUser"));
-  if (user && user.role === "HR") {
-    if (user.id) {
-      config.headers["X-HR-Id"] = user.id;
+  if (user) {
+    if (user.token) {
+      config.headers["Authorization"] = `Bearer ${user.token}`;
     }
-    if (user.email) {
-      config.headers["X-HR-Email"] = user.email;
-    }
-    if (user.name) {
-      config.headers["X-HR-Name"] = user.name;
+    if (user.role === "HR") {
+      if (user.id) {
+        config.headers["X-HR-Id"] = user.id;
+      }
+      if (user.email) {
+        config.headers["X-HR-Email"] = user.email;
+      }
+      if (user.name) {
+        config.headers["X-HR-Name"] = user.name;
+      }
     }
   }
   const apiKey = localStorage.getItem("gemini_api_key");
@@ -611,7 +616,7 @@ export const getRecruitmentByEmail = (email) =>
 
 export const getNotifications = (role, userId) =>
   handleRequest(
-    () => axios.get(`${BASE_URL}/notifications?role=${role}&userId=${userId}`),
+    () => axios.get(`${BASE_URL}/notifications/my`),
     () => {
       const notifications = mockDb.get("notifications") || [];
       return notifications.filter(n => n.role === role || n.userId === userId);
@@ -620,7 +625,7 @@ export const getNotifications = (role, userId) =>
 
 export const getUnreadNotificationCount = (role, userId) =>
   handleRequest(
-    () => axios.get(`${BASE_URL}/notifications/unread-count?role=${role}&userId=${userId}`),
+    () => axios.get(`${BASE_URL}/notifications/unread-count`),
     () => {
       const notifications = mockDb.get("notifications") || [];
       return notifications.filter(n => (n.role === role || n.userId === userId) && !n.isRead).length;
@@ -629,7 +634,7 @@ export const getUnreadNotificationCount = (role, userId) =>
 
 export const markAllNotificationsAsRead = (role, userId) =>
   handleRequest(
-    () => axios.put(`${BASE_URL}/notifications/read-all?role=${role}&userId=${userId}`),
+    () => axios.put(`${BASE_URL}/notifications/read-all`),
     () => {
       const notifications = mockDb.get("notifications") || [];
       const updated = notifications.map(n => (n.role === role || n.userId === userId) ? { ...n, isRead: true } : n);
@@ -640,7 +645,7 @@ export const markAllNotificationsAsRead = (role, userId) =>
 
 export const markNotificationAsRead = (id) =>
   handleRequest(
-    () => axios.put(`${BASE_URL}/notifications/${id}/read`),
+    () => axios.put(`${BASE_URL}/notifications/read/${id}`),
     () => {
       const notifications = mockDb.get("notifications") || [];
       const updated = notifications.map(n => n.id === Number(id) ? { ...n, isRead: true } : n);

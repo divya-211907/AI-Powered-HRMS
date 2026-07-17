@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
       department: user.department?.departmentName || user.department || (role === "HR" ? "Human Resources" : "IT"),
       companyName: user.companyName || "",
       mobileNumber: user.mobileNumber || user.mobile || "",
+      token: user.token,
     };
     
     const loginTime = new Date().toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' });
